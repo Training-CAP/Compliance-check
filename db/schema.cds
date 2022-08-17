@@ -9,6 +9,7 @@ entity Products : cuid, managed {
     price    : Decimal(9,2);
     currency : Currency;
     category : Association to Categories;
+    
 }
 
 entity Categories : CodeList {
