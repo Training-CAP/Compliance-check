@@ -1,0 +1,30 @@
+{
+  "definitions": {
+    "AdminService": {
+      "@source": "admin-service.cds",
+      "kind": "service"
+    },
+    "AdminService.Products": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "title": {
+          "type": "cds.String",
+          "length": 111
+        },
+        "descr": {
+          "type": "cds.String",
+          "length": 1111
+        }
+      }
+    }
+  },
+  "$version": "2.0",
+  "meta": {
+    "creator": "CDS Compiler v3.1.0",
+    "flavor": "inferred"
+  }
+}
