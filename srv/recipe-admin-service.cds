@@ -1,6 +1,6 @@
 using { com.accenture.recipe_create as db } from '../db/recipe_schema';
 
-service AdminService {
+service RecipeService {
     entity Recipe   as projection on db.Recipe;
     
 }
