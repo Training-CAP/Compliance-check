@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="RecipeService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Recipe" EntityType="RecipeService.Recipe"/>
+      </EntityContainer>
+      <EntityType Name="Recipe">
+        <Key>
+          <PropertyRef Name="recipeId"/>
+        </Key>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="recipeId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="recipeName" Type="Edm.String"/>
+        <Property Name="recipeDescription" Type="Edm.String"/>
+        <Property Name="recipeType" Type="Edm.String"/>
+        <Property Name="valid_To" Type="Edm.Date"/>
+        <Property Name="valid_From" Type="Edm.Date"/>
+        <Property Name="status" Type="Edm.String"/>
+      </EntityType>
+      <Annotations Target="RecipeService.Recipe">
+        <Annotation Term="Core.Description" String="Aspect to capture changes by user and name&#xA;&#xA;See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="Дата создания"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="Уникальный ид. пользователя"/>
+        <Annotation Term="Common.Label" String="Создал"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="Дата изменения"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="Уникальный ид. пользователя"/>
+        <Annotation Term="Common.Label" String="Автор изменения"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
