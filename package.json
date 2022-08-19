@@ -5,11 +5,13 @@
   "license": "ISC",
   "repository": "<Add your repository here>",
   "scripts": {
-    "watch-recipe_ui": "cds watch --open recipe_ui/webapp/index.html?sap-ui-xx-viewCache=false"
+  "watch-recipe_ui": "cds watch --open recipe_ui/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-evaluation": "cds watch --open evaluation/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "sapux": [
+    "app/evaluation",
     "app/recipe_ui"
-  ],
+   ],
   "devDependencies": {
     "@sap/ux-specification": "^1.102.3"
   }
