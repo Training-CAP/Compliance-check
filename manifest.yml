@@ -1,0 +1,7 @@
+---
+applications:
+- name: Compliance-check
+  path: srv/target/Recipe-compliance-exec.jar
+  random-route: true
+  services:
+  - RecipeDb
