@@ -102,5 +102,7 @@ srv/.project
 local/*
 srv/src/main/resources/application-hana.yaml
 
-srv/src/main/resources/edmx
+srv/src/main/resources/edmx/*
+
+
 
