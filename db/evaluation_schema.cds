@@ -1,25 +1,14 @@
-namespace sap.capire.evaluation;
+namespace com.sample.evaluation;
+using { managed } from '@sap/cds/common';
 
+entity evaluation : managed {
 
-
-using { Currency, cuid, managed, sap.common.CodeList } from '@sap/cds/common';
-
-
-
-entity evaluation :  managed {
-
-     key ID  : UUID;
-
-    name   :  String;
-
-    brief   : String;
-
-    sellingmarket  : String;
-
-    Valid_from:Date;
-
-    Valid_to:Date;
-
-    status:String;
+    key ID            : UUID;
+        name          : String;
+        brief         : String;
+        sellingmarket : String;
+        valid_from    : Date;
+        valid_to     : Date;
+        status        : String;
 
 }
