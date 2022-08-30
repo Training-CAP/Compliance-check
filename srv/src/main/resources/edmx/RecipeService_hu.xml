@@ -31,6 +31,71 @@
         <Property Name="status" Type="Edm.String"/>
       </EntityType>
       <Annotations Target="RecipeService.Recipe">
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="recipeName"/>
+              <PropertyValue Property="Value" Path="recipeName"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="recipeDescription"/>
+              <PropertyValue Property="Value" Path="recipeDescription"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="recipeType"/>
+              <PropertyValue Property="Value" Path="recipeType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="valid_To"/>
+              <PropertyValue Property="Value" Path="valid_To"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Label" String="valid_From"/>
+              <PropertyValue Property="Value" Path="valid_From"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneratedGroup1">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Label" String="recipeName"/>
+                  <PropertyValue Property="Value" Path="recipeName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Label" String="recipeDescription"/>
+                  <PropertyValue Property="Value" Path="recipeDescription"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Label" String="recipeType"/>
+                  <PropertyValue Property="Value" Path="recipeType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Label" String="valid_To"/>
+                  <PropertyValue Property="Value" Path="valid_To"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Label" String="valid_From"/>
+                  <PropertyValue Property="Value" Path="valid_From"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Label" String="status"/>
+                  <PropertyValue Property="Value" Path="status"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="GeneratedFacet1"/>
+              <PropertyValue Property="Label" String="General Information"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneratedGroup1"/>
+            </Record>
+          </Collection>
+        </Annotation>
         <Annotation Term="Core.Description" String="Aspect to capture changes by user and name&#xA;&#xA;See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
       </Annotations>
       <Annotations Target="RecipeService.Recipe/createdAt">
