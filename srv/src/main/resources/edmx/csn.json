@@ -1,9 +1,8 @@
 {
-  "namespace": "com.accenture.recipe_create",
+  "namespace": "com.sample.evaluation",
   "definitions": {
-    "com.accenture.recipe_create.Recipe": {
+    "com.sample.evaluation.evaluation": {
       "kind": "entity",
-      "doc": "Aspect to capture changes by user and name\n\nSee https://cap.cloud.sap/docs/cds/common#aspect-managed",
       "includes": [
         "managed"
       ],
@@ -20,7 +19,6 @@
           "@Common.Label": "{i18n>CreatedAt}"
         },
         "createdBy": {
-          "doc": "Canonical user ID",
           "@cds.on.insert": {
             "=": "$user"
           },
@@ -47,7 +45,6 @@
           "@Common.Label": "{i18n>ChangedAt}"
         },
         "modifiedBy": {
-          "doc": "Canonical user ID",
           "@cds.on.insert": {
             "=": "$user"
           },
@@ -62,23 +59,23 @@
           "@Common.Label": "{i18n>ChangedBy}",
           "@Core.Description": "{i18n>UserID.Description}"
         },
-        "recipeId": {
+        "ID": {
           "key": true,
           "type": "cds.UUID"
         },
-        "recipeName": {
+        "name": {
           "type": "cds.String"
         },
-        "recipeDescription": {
+        "brief": {
           "type": "cds.String"
         },
-        "recipeType": {
+        "sellingmarket": {
           "type": "cds.String"
         },
-        "valid_To": {
+        "valid_from": {
           "type": "cds.Date"
         },
-        "valid_From": {
+        "valid_to": {
           "type": "cds.Date"
         },
         "status": {
@@ -86,20 +83,11 @@
         }
       }
     },
-    "RecipeService": {
-      "@source": "recipe-admin-service.cds",
-      "kind": "service"
-    },
-    "RecipeService.Recipe": {
+    "com.sample.recipe.Recipe": {
       "kind": "entity",
-      "doc": "Aspect to capture changes by user and name\n\nSee https://cap.cloud.sap/docs/cds/common#aspect-managed",
-      "projection": {
-        "from": {
-          "ref": [
-            "com.accenture.recipe_create.Recipe"
-          ]
-        }
-      },
+      "includes": [
+        "managed"
+      ],
       "elements": {
         "createdAt": {
           "@cds.on.insert": {
@@ -113,7 +101,6 @@
           "@Common.Label": "{i18n>CreatedAt}"
         },
         "createdBy": {
-          "doc": "Canonical user ID",
           "@cds.on.insert": {
             "=": "$user"
           },
@@ -140,7 +127,6 @@
           "@Common.Label": "{i18n>ChangedAt}"
         },
         "modifiedBy": {
-          "doc": "Canonical user ID",
           "@cds.on.insert": {
             "=": "$user"
           },
@@ -179,9 +165,647 @@
         }
       }
     },
+    "EvalautionService": {
+      "@source": "Evaluation_admin_service.cds",
+      "kind": "service"
+    },
+    "EvalautionService.Evaluation": {
+      "kind": "entity",
+      "@sap.creatable": true,
+      "@odata.draft.enabled": true,
+      "@UI.SelectionFields": [
+        {
+          "=": "name"
+        },
+        {
+          "=": "sellingmarket"
+        },
+        {
+          "=": "valid_from"
+        },
+        {
+          "=": "valid_to"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "brief"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "sellingmarket"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "valid_from"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "valid_to"
+          }
+        }
+      ],
+      "@UI.FieldGroup#GeneratedGroup1.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup1.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "name",
+          "Value": {
+            "=": "name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "brief",
+          "Value": {
+            "=": "brief"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "sellingmarket",
+          "Value": {
+            "=": "sellingmarket"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "valid_from",
+          "Value": {
+            "=": "valid_from"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "valid_to",
+          "Value": {
+            "=": "valid_to"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "status",
+          "Value": {
+            "=": "status"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup1"
+        }
+      ],
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "com.sample.evaluation.evaluation"
+            ]
+          },
+          "columns": [
+            {
+              "key": true,
+              "ref": [
+                "ID"
+              ],
+              "cast": {
+                "type": "cds.UUID"
+              }
+            },
+            {
+              "ref": [
+                "name"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            },
+            {
+              "ref": [
+                "brief"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            },
+            {
+              "ref": [
+                "sellingmarket"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            },
+            {
+              "ref": [
+                "valid_from"
+              ],
+              "cast": {
+                "type": "cds.Date"
+              }
+            },
+            {
+              "ref": [
+                "valid_to"
+              ],
+              "cast": {
+                "type": "cds.Date"
+              }
+            },
+            {
+              "ref": [
+                "status"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            }
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "@Common.Label": "id",
+          "@UI.Hidden": true,
+          "@UI.HiddenFilter": true,
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "name": {
+          "@Common.Label": "Name",
+          "type": "cds.String"
+        },
+        "brief": {
+          "@Common.Label": "Description",
+          "type": "cds.String"
+        },
+        "sellingmarket": {
+          "@Common.Label": "Selling Market",
+          "type": "cds.String"
+        },
+        "valid_from": {
+          "@Common.Label": "Valid From",
+          "type": "cds.Date"
+        },
+        "valid_to": {
+          "@Common.Label": "Valid To",
+          "type": "cds.Date"
+        },
+        "status": {
+          "@Common.Label": "Status",
+          "type": "cds.String"
+        },
+        "IsActiveEntity": {
+          "type": "cds.Boolean",
+          "key": true,
+          "default": {
+            "val": true
+          },
+          "@UI.Hidden": true
+        },
+        "HasActiveEntity": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "notNull": true,
+          "@UI.Hidden": true
+        },
+        "HasDraftEntity": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "notNull": true,
+          "@UI.Hidden": true
+        },
+        "DraftAdministrativeData": {
+          "type": "cds.Association",
+          "target": "EvalautionService.DraftAdministrativeData",
+          "keys": [
+            {
+              "ref": [
+                "DraftUUID"
+              ],
+              "$generatedFieldName": "DraftAdministrativeData_DraftUUID"
+            }
+          ],
+          "cardinality": {
+            "max": 1
+          },
+          "@odata.contained": true,
+          "@UI.Hidden": true
+        },
+        "DraftAdministrativeData_DraftUUID": {
+          "type": "cds.UUID",
+          "@odata.contained": true,
+          "@UI.Hidden": true,
+          "@odata.foreignKey4": "DraftAdministrativeData"
+        },
+        "SiblingEntity": {
+          "type": "cds.Association",
+          "target": "EvalautionService.Evaluation",
+          "cardinality": {
+            "max": 1
+          },
+          "on": [
+            {
+              "ref": [
+                "SiblingEntity",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "SiblingEntity",
+                "IsActiveEntity"
+              ]
+            },
+            "!=",
+            {
+              "ref": [
+                "IsActiveEntity"
+              ]
+            }
+          ]
+        }
+      },
+      "@Common.DraftRoot.ActivationAction": "draftActivate",
+      "@Common.DraftRoot.EditAction": "draftEdit",
+      "@Common.DraftRoot.PreparationAction": "draftPrepare",
+      "actions": {
+        "draftPrepare": {
+          "kind": "action",
+          "returns": {
+            "type": "EvalautionService.Evaluation"
+          },
+          "params": {
+            "SideEffectsQualifier": {
+              "type": "cds.String"
+            }
+          }
+        },
+        "draftActivate": {
+          "kind": "action",
+          "returns": {
+            "type": "EvalautionService.Evaluation"
+          }
+        },
+        "draftEdit": {
+          "kind": "action",
+          "returns": {
+            "type": "EvalautionService.Evaluation"
+          },
+          "params": {
+            "PreserveChanges": {
+              "type": "cds.Boolean"
+            }
+          }
+        }
+      }
+    },
+    "RecipeService": {
+      "@source": "Recipe_admin_service.cds",
+      "kind": "service"
+    },
+    "RecipeService.Recipe": {
+      "kind": "entity",
+      "@sap.creatable": true,
+      "@odata.draft.enabled": true,
+      "@UI.SelectionFields": [
+        {
+          "=": "recipeName"
+        },
+        {
+          "=": "recipeType"
+        },
+        {
+          "=": "valid_From"
+        },
+        {
+          "=": "valid_To"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "recipeName"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "recipeDescription"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "recipeType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "valid_To"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "valid_From"
+          }
+        }
+      ],
+      "@UI.FieldGroup#GeneratedGroup1.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup1.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "recipeName"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "recipeDescription"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "recipeType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "valid_To"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "valid_From"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup1"
+        }
+      ],
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "com.sample.recipe.Recipe"
+            ]
+          },
+          "columns": [
+            {
+              "key": true,
+              "ref": [
+                "recipeId"
+              ],
+              "cast": {
+                "type": "cds.UUID"
+              }
+            },
+            {
+              "ref": [
+                "recipeName"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            },
+            {
+              "ref": [
+                "recipeDescription"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            },
+            {
+              "ref": [
+                "recipeType"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            },
+            {
+              "ref": [
+                "valid_To"
+              ],
+              "cast": {
+                "type": "cds.Date"
+              }
+            },
+            {
+              "ref": [
+                "valid_From"
+              ],
+              "cast": {
+                "type": "cds.Date"
+              }
+            },
+            {
+              "ref": [
+                "status"
+              ],
+              "cast": {
+                "type": "cds.String"
+              }
+            }
+          ]
+        }
+      },
+      "elements": {
+        "recipeId": {
+          "@Common.Label": "id",
+          "@UI.Hidden": true,
+          "@UI.HiddenFilter": true,
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "recipeName": {
+          "@Common.Label": "Name",
+          "type": "cds.String"
+        },
+        "recipeDescription": {
+          "type": "cds.String"
+        },
+        "recipeType": {
+          "@Common.Label": "Type",
+          "type": "cds.String"
+        },
+        "valid_To": {
+          "@Common.Label": "Valid To",
+          "type": "cds.Date"
+        },
+        "valid_From": {
+          "@Common.Label": "Valid From",
+          "type": "cds.Date"
+        },
+        "status": {
+          "@Common.Label": "Status",
+          "type": "cds.String"
+        },
+        "IsActiveEntity": {
+          "type": "cds.Boolean",
+          "key": true,
+          "default": {
+            "val": true
+          },
+          "@UI.Hidden": true
+        },
+        "HasActiveEntity": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "notNull": true,
+          "@UI.Hidden": true
+        },
+        "HasDraftEntity": {
+          "type": "cds.Boolean",
+          "default": {
+            "val": false
+          },
+          "notNull": true,
+          "@UI.Hidden": true
+        },
+        "DraftAdministrativeData": {
+          "type": "cds.Association",
+          "target": "RecipeService.DraftAdministrativeData",
+          "keys": [
+            {
+              "ref": [
+                "DraftUUID"
+              ],
+              "$generatedFieldName": "DraftAdministrativeData_DraftUUID"
+            }
+          ],
+          "cardinality": {
+            "max": 1
+          },
+          "@odata.contained": true,
+          "@UI.Hidden": true
+        },
+        "DraftAdministrativeData_DraftUUID": {
+          "type": "cds.UUID",
+          "@odata.contained": true,
+          "@UI.Hidden": true,
+          "@odata.foreignKey4": "DraftAdministrativeData"
+        },
+        "SiblingEntity": {
+          "type": "cds.Association",
+          "target": "RecipeService.Recipe",
+          "cardinality": {
+            "max": 1
+          },
+          "on": [
+            {
+              "ref": [
+                "SiblingEntity",
+                "recipeId"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "recipeId"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "SiblingEntity",
+                "IsActiveEntity"
+              ]
+            },
+            "!=",
+            {
+              "ref": [
+                "IsActiveEntity"
+              ]
+            }
+          ]
+        }
+      },
+      "@Common.DraftRoot.ActivationAction": "draftActivate",
+      "@Common.DraftRoot.EditAction": "draftEdit",
+      "@Common.DraftRoot.PreparationAction": "draftPrepare",
+      "actions": {
+        "draftPrepare": {
+          "kind": "action",
+          "returns": {
+            "type": "RecipeService.Recipe"
+          },
+          "params": {
+            "SideEffectsQualifier": {
+              "type": "cds.String"
+            }
+          }
+        },
+        "draftActivate": {
+          "kind": "action",
+          "returns": {
+            "type": "RecipeService.Recipe"
+          }
+        },
+        "draftEdit": {
+          "kind": "action",
+          "returns": {
+            "type": "RecipeService.Recipe"
+          },
+          "params": {
+            "PreserveChanges": {
+              "type": "cds.Boolean"
+            }
+          }
+        }
+      }
+    },
     "Language": {
       "kind": "type",
-      "doc": "Type for an association to Languages\n\nSee https://cap.cloud.sap/docs/cds/common#type-language",
       "type": "cds.Association",
       "target": "sap.common.Languages",
       "keys": [
@@ -196,7 +820,6 @@
     },
     "Currency": {
       "kind": "type",
-      "doc": "Type for an association to Currencies\n\nSee https://cap.cloud.sap/docs/cds/common#type-currency",
       "type": "cds.Association",
       "target": "sap.common.Currencies",
       "keys": [
@@ -211,7 +834,6 @@
     },
     "Country": {
       "kind": "type",
-      "doc": "Type for an association to Countries\n\nSee https://cap.cloud.sap/docs/cds/common#type-country",
       "type": "cds.Association",
       "target": "sap.common.Countries",
       "keys": [
@@ -225,19 +847,16 @@
       "@Core.Description": "{i18n>CountryCode.Description}"
     },
     "sap.common": {
-      "kind": "context",
-      "doc": "Entities to serve the reuse types with extensible code lists\nincluding built-in support for value lists in Fiori."
+      "kind": "context"
     },
     "sap.common.Locale": {
       "kind": "type",
-      "doc": "Type for a language code",
       "type": "cds.String",
       "length": 14,
       "@Common.Label": "{i18n>LanguageCode}"
     },
     "sap.common.Languages": {
       "kind": "entity",
-      "doc": "Code list for languages\n\nSee https://cap.cloud.sap/docs/cds/common#entity-sapcommonlanguages",
       "@cds.autoexpose": true,
       "@cds.persistence.skip": "if-unused",
       "@UI.Identification": [
@@ -265,7 +884,6 @@
           "@Common.Label": "{i18n>Description}"
         },
         "code": {
-          "doc": "Type for a language code",
           "@Common.Text": {
             "=": "name"
           },
@@ -332,7 +950,6 @@
     },
     "sap.common.Countries": {
       "kind": "entity",
-      "doc": "Code list for countries\n\nSee https://cap.cloud.sap/docs/cds/common#entity-sapcommoncountries",
       "@cds.autoexpose": true,
       "@cds.persistence.skip": "if-unused",
       "@UI.Identification": [
@@ -426,7 +1043,6 @@
     },
     "sap.common.Currencies": {
       "kind": "entity",
-      "doc": "Code list for currencies\n\nSee https://cap.cloud.sap/docs/cds/common#entity-sapcommoncurrencies",
       "@cds.autoexpose": true,
       "@cds.persistence.skip": "if-unused",
       "@UI.Identification": [
@@ -525,7 +1141,6 @@
     },
     "sap.common.CodeList": {
       "kind": "aspect",
-      "doc": "Aspect for a code list with name and description\n\nSee https://cap.cloud.sap/docs/cds/common#aspect-sapcommoncodelist",
       "@cds.autoexpose": true,
       "@cds.persistence.skip": "if-unused",
       "@UI.Identification": [
@@ -553,7 +1168,6 @@
     },
     "cuid": {
       "kind": "aspect",
-      "doc": "Aspect for entities with canonical universal IDs\n\nSee https://cap.cloud.sap/docs/cds/common#aspect-cuid",
       "elements": {
         "ID": {
           "key": true,
@@ -563,7 +1177,6 @@
     },
     "managed": {
       "kind": "aspect",
-      "doc": "Aspect to capture changes by user and name\n\nSee https://cap.cloud.sap/docs/cds/common#aspect-managed",
       "elements": {
         "createdAt": {
           "@cds.on.insert": {
@@ -577,7 +1190,6 @@
           "@Common.Label": "{i18n>CreatedAt}"
         },
         "createdBy": {
-          "doc": "Canonical user ID",
           "@cds.on.insert": {
             "=": "$user"
           },
@@ -604,7 +1216,6 @@
           "@Common.Label": "{i18n>ChangedAt}"
         },
         "modifiedBy": {
-          "doc": "Canonical user ID",
           "@cds.on.insert": {
             "=": "$user"
           },
@@ -623,7 +1234,6 @@
     },
     "temporal": {
       "kind": "aspect",
-      "doc": "Aspect for entities with temporal data\n\nSee https://cap.cloud.sap/docs/cds/common#aspect-temporal",
       "elements": {
         "validFrom": {
           "@cds.valid.from": true,
@@ -637,7 +1247,6 @@
     },
     "User": {
       "kind": "type",
-      "doc": "Canonical user ID",
       "type": "cds.String",
       "length": 255,
       "@Common.Label": "{i18n>UserID}",
@@ -645,7 +1254,6 @@
     },
     "extensible": {
       "kind": "aspect",
-      "doc": "Aspects for extensible entities.",
       "elements": {
         "extensions__": {
           "@cds.api.ignore": true,
@@ -658,7 +1266,6 @@
       "@odata.draft.enabled": false,
       "elements": {
         "locale": {
-          "doc": "Type for a language code",
           "key": true,
           "type": "cds.String",
           "length": 14,
@@ -677,7 +1284,6 @@
           "@Common.Label": "{i18n>Description}"
         },
         "code": {
-          "doc": "Type for a language code",
           "@odata.containment.ignore": true,
           "@Common.Text": {
             "=": "name"
@@ -694,7 +1300,6 @@
       "@odata.draft.enabled": false,
       "elements": {
         "locale": {
-          "doc": "Type for a language code",
           "key": true,
           "type": "cds.String",
           "length": 14,
@@ -729,7 +1334,6 @@
       "@odata.draft.enabled": false,
       "elements": {
         "locale": {
-          "doc": "Type for a language code",
           "key": true,
           "type": "cds.String",
           "length": 14,
@@ -758,11 +1362,170 @@
           "@Common.Label": "{i18n>CurrencyCode}"
         }
       }
+    },
+    "DRAFT.DraftAdministrativeData": {
+      "kind": "entity",
+      "elements": {
+        "DraftUUID": {
+          "type": "cds.UUID",
+          "key": true,
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftUUID}"
+        },
+        "CreationDateTime": {
+          "type": "cds.Timestamp",
+          "@Common.Label": "{i18n>Draft_CreationDateTime}"
+        },
+        "CreatedByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_CreatedByUser}"
+        },
+        "DraftIsCreatedByMe": {
+          "type": "cds.Boolean",
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftIsCreatedByMe}"
+        },
+        "LastChangeDateTime": {
+          "type": "cds.Timestamp",
+          "@Common.Label": "{i18n>Draft_LastChangeDateTime}"
+        },
+        "LastChangedByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_LastChangedByUser}"
+        },
+        "InProcessByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_InProcessByUser}"
+        },
+        "DraftIsProcessedByMe": {
+          "type": "cds.Boolean",
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftIsProcessedByMe}"
+        }
+      },
+      "@Common.Label": "{i18n>Draft_DraftAdministrativeData}"
+    },
+    "EvalautionService.DraftAdministrativeData": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "DRAFT.DraftAdministrativeData"
+          ]
+        }
+      },
+      "elements": {
+        "DraftUUID": {
+          "type": "cds.UUID",
+          "key": true,
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftUUID}"
+        },
+        "CreationDateTime": {
+          "type": "cds.Timestamp",
+          "@Common.Label": "{i18n>Draft_CreationDateTime}"
+        },
+        "CreatedByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_CreatedByUser}"
+        },
+        "DraftIsCreatedByMe": {
+          "type": "cds.Boolean",
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftIsCreatedByMe}"
+        },
+        "LastChangeDateTime": {
+          "type": "cds.Timestamp",
+          "@Common.Label": "{i18n>Draft_LastChangeDateTime}"
+        },
+        "LastChangedByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_LastChangedByUser}"
+        },
+        "InProcessByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_InProcessByUser}"
+        },
+        "DraftIsProcessedByMe": {
+          "type": "cds.Boolean",
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftIsProcessedByMe}"
+        }
+      },
+      "@Common.Label": "{i18n>Draft_DraftAdministrativeData}"
+    },
+    "RecipeService.DraftAdministrativeData": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "DRAFT.DraftAdministrativeData"
+          ]
+        }
+      },
+      "elements": {
+        "DraftUUID": {
+          "type": "cds.UUID",
+          "key": true,
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftUUID}"
+        },
+        "CreationDateTime": {
+          "type": "cds.Timestamp",
+          "@Common.Label": "{i18n>Draft_CreationDateTime}"
+        },
+        "CreatedByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_CreatedByUser}"
+        },
+        "DraftIsCreatedByMe": {
+          "type": "cds.Boolean",
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftIsCreatedByMe}"
+        },
+        "LastChangeDateTime": {
+          "type": "cds.Timestamp",
+          "@Common.Label": "{i18n>Draft_LastChangeDateTime}"
+        },
+        "LastChangedByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_LastChangedByUser}"
+        },
+        "InProcessByUser": {
+          "type": "cds.String",
+          "length": 256,
+          "@Common.Label": "{i18n>Draft_InProcessByUser}"
+        },
+        "DraftIsProcessedByMe": {
+          "type": "cds.Boolean",
+          "@UI.Hidden": true,
+          "@Common.Label": "{i18n>Draft_DraftIsProcessedByMe}"
+        }
+      },
+      "@Common.Label": "{i18n>Draft_DraftAdministrativeData}"
     }
   },
+  "extensions": [
+    {
+      "annotate": "RecipeService.Recipe",
+      "elements": {
+        "brief": {
+          "@Common.Label": "Description"
+        }
+      }
+    }
+  ],
   "$version": "2.0",
   "meta": {
-    "creator": "CDS Compiler v3.1.0",
+    "creator": "CDS Compiler v3.1.2",
     "flavor": "inferred"
   }
 }

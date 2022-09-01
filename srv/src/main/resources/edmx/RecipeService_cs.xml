@@ -12,16 +12,15 @@
   <edmx:DataServices>
     <Schema Namespace="RecipeService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
       <EntityContainer Name="EntityContainer">
-        <EntitySet Name="Recipe" EntityType="RecipeService.Recipe"/>
+        <EntitySet Name="Recipe" EntityType="RecipeService.Recipe">
+          <NavigationPropertyBinding Path="SiblingEntity" Target="Recipe"/>
+        </EntitySet>
       </EntityContainer>
       <EntityType Name="Recipe">
         <Key>
           <PropertyRef Name="recipeId"/>
+          <PropertyRef Name="IsActiveEntity"/>
         </Key>
-        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
-        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
-        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
-        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
         <Property Name="recipeId" Type="Edm.Guid" Nullable="false"/>
         <Property Name="recipeName" Type="Edm.String"/>
         <Property Name="recipeDescription" Type="Edm.String"/>
@@ -29,33 +28,173 @@
         <Property Name="valid_To" Type="Edm.Date"/>
         <Property Name="valid_From" Type="Edm.Date"/>
         <Property Name="status" Type="Edm.String"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="RecipeService.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="RecipeService.Recipe"/>
       </EntityType>
+      <EntityType Name="DraftAdministrativeData">
+        <Key>
+          <PropertyRef Name="DraftUUID"/>
+        </Key>
+        <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+        <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+      </EntityType>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="RecipeService.Recipe"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="RecipeService.Recipe"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="RecipeService.Recipe"/>
+        <ReturnType Type="RecipeService.Recipe"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="RecipeService.Recipe"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="RecipeService.Recipe"/>
+      </Action>
       <Annotations Target="RecipeService.Recipe">
-        <Annotation Term="Core.Description" String="Aspect to capture changes by user and name&#xA;&#xA;See https://cap.cloud.sap/docs/cds/common#aspect-managed"/>
+        <Annotation Term="UI.SelectionFields">
+          <Collection>
+            <PropertyPath>recipeName</PropertyPath>
+            <PropertyPath>recipeType</PropertyPath>
+            <PropertyPath>valid_From</PropertyPath>
+            <PropertyPath>valid_To</PropertyPath>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="recipeName"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="recipeDescription"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="recipeType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="valid_To"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="valid_From"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneratedGroup1">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="recipeName"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="recipeDescription"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="recipeType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="valid_To"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="valid_From"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="status"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="GeneratedFacet1"/>
+              <PropertyValue Property="Label" String="General Information"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneratedGroup1"/>
+            </Record>
+          </Collection>
+        </Annotation>
       </Annotations>
-      <Annotations Target="RecipeService.Recipe/createdAt">
-        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-        <Annotation Term="Core.Immutable" Bool="true"/>
-        <Annotation Term="Core.Computed" Bool="true"/>
-        <Annotation Term="Common.Label" String="Vytvořeno dne"/>
+      <Annotations Target="RecipeService.EntityContainer/Recipe">
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="RecipeService.draftActivate"/>
+            <PropertyValue Property="EditAction" String="RecipeService.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="RecipeService.draftPrepare"/>
+          </Record>
+        </Annotation>
       </Annotations>
-      <Annotations Target="RecipeService.Recipe/createdBy">
+      <Annotations Target="RecipeService.Recipe/recipeId">
+        <Annotation Term="Common.Label" String="id"/>
+        <Annotation Term="UI.Hidden" Bool="true"/>
         <Annotation Term="UI.HiddenFilter" Bool="true"/>
-        <Annotation Term="Core.Immutable" Bool="true"/>
-        <Annotation Term="Core.Computed" Bool="true"/>
-        <Annotation Term="Core.Description" String="Jedinečné ID uživatele"/>
-        <Annotation Term="Common.Label" String="Vytvořil"/>
       </Annotations>
-      <Annotations Target="RecipeService.Recipe/modifiedAt">
-        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-        <Annotation Term="Core.Computed" Bool="true"/>
-        <Annotation Term="Common.Label" String="Změněno dne"/>
+      <Annotations Target="RecipeService.Recipe/recipeName">
+        <Annotation Term="Common.Label" String="Name"/>
       </Annotations>
-      <Annotations Target="RecipeService.Recipe/modifiedBy">
-        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-        <Annotation Term="Core.Computed" Bool="true"/>
-        <Annotation Term="Core.Description" String="Jedinečné ID uživatele"/>
-        <Annotation Term="Common.Label" String="Autor změny"/>
+      <Annotations Target="RecipeService.Recipe/recipeType">
+        <Annotation Term="Common.Label" String="Type"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/valid_To">
+        <Annotation Term="Common.Label" String="Valid To"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/valid_From">
+        <Annotation Term="Common.Label" String="Valid From"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/status">
+        <Annotation Term="Common.Label" String="Status"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="RecipeService.Recipe/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData">
+        <Annotation Term="Common.Label" String="Správní data návrhu"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/DraftUUID">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Návrh (technické ID)"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/CreationDateTime">
+        <Annotation Term="Common.Label" String="Návrh vytvořen dne"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/CreatedByUser">
+        <Annotation Term="Common.Label" String="Návrh vytvořil"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/DraftIsCreatedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Návrh vytvořen mnou"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/LastChangeDateTime">
+        <Annotation Term="Common.Label" String="Návrh naposledy změněn dne"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/LastChangedByUser">
+        <Annotation Term="Common.Label" String="Návrh naposledy změnil"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/InProcessByUser">
+        <Annotation Term="Common.Label" String="Návrh zpracovává"/>
+      </Annotations>
+      <Annotations Target="RecipeService.DraftAdministrativeData/DraftIsProcessedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="Návrh zpracovávaný mnou"/>
       </Annotations>
     </Schema>
   </edmx:DataServices>
