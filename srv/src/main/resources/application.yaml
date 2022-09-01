@@ -4,14 +4,3 @@ spring:
 cds:
   datasource:
     auto-config.enabled: false
-  security:
-    mock:
-      users:
-        - name: venky
-          password: venky
-          roles:
-            - Developers
-          additional:
-            firstName: venky
-            lastName: sharma
-            email: venky@mail.com
