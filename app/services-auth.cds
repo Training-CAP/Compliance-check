@@ -1,4 +1,4 @@
 using { evalautionService, RecipeService } from './services';
 
-annotate evalautionService with @(requires: 'Developers');
-annotate RecipeService with @(requires: 'Developers');
+annotate evalautionService with @(requires: 'any');
+annotate RecipeService with @(requires: 'any');
