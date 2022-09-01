@@ -1,31 +1,29 @@
-using RecipeService as service from '../../srv/recipe-admin-service';
+using RecipeService as service from '../../srv/Recipe_admin_service';
 
 annotate service.Recipe with @(
+      // annotation for filters in list report filter bar
+    UI.SelectionFields :[recipeName,recipeType,valid_From,valid_To],
+      // annotation for list report table
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'recipeName',
-            Value : recipeName,
+            Value : recipeName
         },
         {
             $Type : 'UI.DataField',
-            Label : 'recipeDescription',
-            Value : recipeDescription,
+            Value : recipeDescription
         },
         {
             $Type : 'UI.DataField',
-            Label : 'recipeType',
-            Value : recipeType,
+            Value : recipeType
         },
         {
             $Type : 'UI.DataField',
-            Label : 'valid_To',
-            Value : valid_To,
+            Value : valid_To
         },
         {
             $Type : 'UI.DataField',
-            Label : 'valid_From',
-            Value : valid_From,
+            Value : valid_From
         },
     ]
 );
@@ -35,32 +33,26 @@ annotate service.Recipe with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'recipeName',
                 Value : recipeName,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'recipeDescription',
                 Value : recipeDescription,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'recipeType',
                 Value : recipeType,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'valid_To',
                 Value : valid_To,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'valid_From',
                 Value : valid_From,
             },
             {
-                $Type : 'UI.DataField',
-                Label : 'status',
+                $Type : 'UI.DataField',    
                 Value : status,
             },
         ],
@@ -73,4 +65,23 @@ annotate service.Recipe with @(
             Target : '@UI.FieldGroup#GeneratedGroup1',
         },
     ]
-);
+)
+{
+    // annotations for each field in the entity
+   recipeId
+   @Common.Label:'id'
+   @UI.Hidden : true
+   @UI.HiddenFilter : true;
+   recipeName
+   @Common.Label:'Name';
+   brief
+   @Common.Label:'Description';
+   recipeType
+   @Common.Label:'Type';
+   valid_To
+   @Common.Label:'Valid To';
+   valid_From
+   @Common.Label:'Valid From';
+   status 
+   @Common.Label:'Status';
+};

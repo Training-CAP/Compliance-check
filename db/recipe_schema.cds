@@ -1,4 +1,4 @@
-namespace com.accenture.recipe_create;
+namespace com.sample.recipe;
 
 using {managed} from '@sap/cds/common';
 
