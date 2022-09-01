@@ -1,1 +1,108 @@
 node_modules
+/dist/
+Skip to content
+ Enterprise
+Search or jump to…
+Pull requests
+Issues
+Explore
+ 
+@C5266882 
+Maintenance: github.tools.sap will be unavailable for 5 hours on 27-AUGUST-2022 06:00 (UTC) due to the GHES feature upgrade. Link to CAC
+
+epd-plmcore
+/
+specification
+Public
+0
+2
+7
+Code
+Issues
+93
+Pull requests
+19
+Projects
+5
+Wiki
+Security
+Insights
+PR Pipelines
+MASTER Pipeline
+SMID Pipeline
+More
+specification/.gitignore
+@I057955
+I057955 UI build performance improvement (#1967)
+…
+Latest commit 5dfdf31 on Feb 26
+ History
+ 10 contributors
+@I057955@I344322@I041221@I310858@I047522@I513744@I329002@C5285308@I068262@I356185
+60 lines (54 sloc)  923 Bytes
+   
+# CAP
+_out
+*.db
+connection.properties
+default-*.json
+gen/
+node_modules/
+package-lock.json
+target/
+node/
+dist/
+edmx/
+**/resources/schema.sql
+
+# Web IDE, App Studio
+.che/
+.gen/
+.vscode/
+.settings/
+.idea/
+*.iml
+
+# MTA
+*_mta_build_tmp
+*.mtar
+mta_archives/
+
+# Other
+.DS_Store
+*.orig
+*.log
+*.factorypath
+#ui application build
+utils/localLaunchpad/webapp/ui
+coverage/
+.sonar/
+
+# added by cds deploy
+default-env.json
+app/resources/*
+srv/src/main/resources/edmx/
+srv/src/main/resources/schema.sql
+db/default-env.json
+default-env.json
+utils/localLaunchpad/default-env.json
+app/ui-specification/webapp/localService/metadata.xml
+app/ui-loadvaluesets/webapp/localService/metadata.xml
+srv/src/main/resources/application-local.yaml
+srv/src/main/resources/application-hana-mockuaa.yaml
+*.http
+srv/.classpath
+srv/bin/*
+
+utils/xs-security-local.json
+.project
+srv/.project
+
+#for local bat
+local/*
+srv/src/main/resources/application-hana.yaml
+
+srv/src/main/resources/edmx/*
+
+
+

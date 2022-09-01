@@ -1,0 +1,147 @@
+{
+    "_version": "1.40.0",
+    "sap.app": {
+      "id": "evaluation",
+      "type": "application",
+      "i18n": "i18n/i18n.properties",
+      "applicationVersion": {
+        "version": "0.0.1"
+      },
+      "title": "{{appTitle}}",
+      "description": "{{appDescription}}",
+      "resources": "resources.json",
+      "sourceTemplate": {
+        "id": "@sap/generator-fiori:lrop",
+        "version": "1.7.0",
+        "toolsId": "4c3c7ee3-c79e-4a2e-9878-ef67cb2256f1"
+      },
+      "dataSources": {
+        "mainService": {
+          "uri": "/evalaution/",
+          "type": "OData",
+          "settings": {
+            "annotations": [
+              "annotation"
+            ],
+            "localUri": "localService/metadata.xml",
+            "odataVersion": "4.0"
+          }
+        },
+        "annotation": {
+          "type": "ODataAnnotation",
+          "uri": "annotations/annotation.xml",
+          "settings": {
+            "localUri": "annotations/annotation.xml"
+          }
+        }
+      }
+    },
+    "sap.ui": {
+      "technology": "UI5",
+      "icons": {
+        "icon": "",
+        "favIcon": "",
+        "phone": "",
+        "phone@2": "",
+        "tablet": "",
+        "tablet@2": ""
+      },
+      "deviceTypes": {
+        "desktop": true,
+        "tablet": true,
+        "phone": true
+      }
+    },
+    "sap.ui5": {
+      "flexEnabled": true,
+      "dependencies": {
+        "minUI5Version": "1.102.1",
+        "libs": {
+          "sap.m": {},
+          "sap.ui.core": {},
+          "sap.ushell": {},
+          "sap.fe.templates": {}
+        }
+      },
+      "contentDensities": {
+        "compact": true,
+        "cozy": true
+      },
+      "models": {
+        "i18n": {
+          "type": "sap.ui.model.resource.ResourceModel",
+          "settings": {
+            "bundleName": "evaluation.i18n.i18n"
+          }
+        },
+        "": {
+          "dataSource": "mainService",
+          "preload": true,
+          "settings": {
+            "synchronizationMode": "None",
+            "operationMode": "Server",
+            "autoExpandSelect": true,
+            "earlyRequests": true
+          }
+        },
+        "@i18n": {
+          "type": "sap.ui.model.resource.ResourceModel",
+          "uri": "i18n/i18n.properties"
+        }
+      },
+      "resources": {
+        "css": []
+      },
+      "routing": {
+        "config": {},
+        "routes": [
+          {
+            "pattern": ":?query:",
+            "name": "evaluationList",
+            "target": "evaluationList"
+          },
+          {
+            "pattern": "evaluation({key}):?query:",
+            "name": "evaluationObjectPage",
+            "target": "evaluationObjectPage"
+          }
+        ],
+        "targets": {
+          "evaluationList": {
+            "type": "Component",
+            "id": "evaluationList",
+            "name": "sap.fe.templates.ListReport",
+            "options": {
+              "settings": {
+                "entitySet": "Evaluation",
+                "variantManagement": "Page",
+                "navigation": {
+                  "evaluation": {
+                    "detail": {
+                      "route": "evaluationObjectPage"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "evaluationObjectPage": {
+            "type": "Component",
+            "id": "evaluationObjectPage",
+            "name": "sap.fe.templates.ObjectPage",
+            "options": {
+              "settings": {
+                "editableHeaderContent": false,
+                "entitySet": "Evaluation"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sap.fiori": {
+      "registrationIds": [],
+      "archeType": "transactional"
+    }
+  }
+  

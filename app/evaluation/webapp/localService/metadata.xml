@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="evalautionService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="evaluation" EntityType="evalautionService.evaluation"/>
+            </EntityContainer>
+            <EntityType Name="evaluation">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="brief" Type="Edm.String"/>
+                <Property Name="sellingmarket" Type="Edm.String"/>
+                <Property Name="valid_from" Type="Edm.Date"/>
+                <Property Name="valid_to" Type="Edm.Date"/>
+                <Property Name="status" Type="Edm.String"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
