@@ -25,12 +25,12 @@ service RecipeService {
                 ingredient  :  redirected to Ingredient,
                 recipe      :  redirected to Recipe
         };
-
+//Ingredient is added
     entity Ingredient as
         select from recipe.Ingredient {
             ID,
             name,
             brief
         };
-        
+
 }

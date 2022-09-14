@@ -12,6 +12,7 @@ entity Recipe : cuid,managed {
     ingredientItems      : Composition of many IngredientItem
                                              on ingredientItems.recipe = $self;
 }
+//Ingredient and IngredientItem has been added
 entity IngredientItem : managed {
         key ID            : UUID;
         ingredient     : Association to one Ingredient;
@@ -24,7 +25,7 @@ entity Ingredient : managed {
         key ID            : UUID;
         name          : String;
         brief         : String;
-        
+
 }
 
 

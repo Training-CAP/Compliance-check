@@ -91,7 +91,7 @@ annotate service.Recipe with @(
    status 
    @Common.Label:'Status';
 };
-
+//annotations for ingredientItem
 annotate service.IngredientItem with @(
      UI.LineItem : [
         {
