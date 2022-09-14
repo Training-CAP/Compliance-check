@@ -7,15 +7,29 @@ service RecipeService {
     @odata.draft.enabled:true
     entity Recipe as
         select from recipe.Recipe {
-            key recipeId          : UUID,
-                recipeName        : String,
-                recipeDescription : String,
-                recipeType        : String,
-                valid_To          : Date,
-                valid_From        : Date,
-                status            : String
-
-
+            key ID,
+                recipeName,
+                recipeDescription,
+                recipeType,
+                valid_To,
+                valid_From,
+                status,
+                ingredientItems  :  redirected to IngredientItem
+        };
+    entity IngredientItem as
+        select from recipe.IngredientItem {
+            key ID,
+                minQty,
+                maxQty,
+                actualQty,
+                ingredient  :  redirected to Ingredient,
+                recipe      :  redirected to Recipe
         };
 
+    entity Ingredient as
+        select from recipe.Ingredient {
+            ID,
+            name,
+            brief
+        };
 }
