@@ -17,7 +17,7 @@
       },
       "dataSources": {
         "mainService": {
-          "uri": "/evalaution/",
+          "uri": "/evaluation/",
           "type": "OData",
           "settings": {
             "annotations": [
@@ -101,7 +101,7 @@
             "target": "evaluationList"
           },
           {
-            "pattern": "evaluation({key}):?query:",
+            "pattern": "Evaluation({key}):?query:",
             "name": "evaluationObjectPage",
             "target": "evaluationObjectPage"
           }
@@ -116,7 +116,7 @@
                 "entitySet": "Evaluation",
                 "variantManagement": "Page",
                 "navigation": {
-                  "evaluation": {
+                  "Evaluation": {
                     "detail": {
                       "route": "evaluationObjectPage"
                     }

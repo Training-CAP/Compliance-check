@@ -1,4 +1,4 @@
-using EvalautionService as service from '../../srv/Evaluation_admin_service';
+using EvaluationService as service from '../../srv/Evaluation_admin_service';
 
 annotate service.Evaluation with @(
     // annotation for filters in list report filter bar
@@ -7,24 +7,24 @@ annotate service.Evaluation with @(
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Value : name,
+            Value : name
         },
         {
             $Type : 'UI.DataField',
-            Value : brief,
+            Value : brief
         },
         {
             $Type : 'UI.DataField',
-            Value : sellingmarket,
+            Value : sellingmarket
         },
         {
             $Type : 'UI.DataField',
-            Value : valid_from,
+            Value : valid_from
         },
         {
             $Type : 'UI.DataField',
-            Value : valid_to,
-        },
+            Value : valid_to
+        }
     ]
 );
 annotate service.Evaluation with @(
@@ -70,10 +70,13 @@ annotate service.Evaluation with @(
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup1',
         },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'Purpose',
+            Label : 'Purposes',
+            Target : 'purposeItems/@UI.LineItem',
+        }
     ]
-<<<<<<< HEAD
-);
-=======
 )
 {
 // annotations for each field in the entity
@@ -94,5 +97,37 @@ annotate service.Evaluation with @(
    status 
    @Common.Label:'Status';
 };
->>>>>>> eb965fdd323d654f827fe140cb423079b40ec4f1
-
+annotate service.PurposeItem with @(
+     UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Value : purpose.name,
+        },
+         {
+            $Type : 'UI.DataField',
+            Value : purpose.brief,
+        },
+         {
+            $Type : 'UI.DataField',
+            Value : purpose.valid_from,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : purpose.valid_to
+        }
+     ]
+);
+annotate service.CompliancePurpose{
+    ID
+    @UI.Hidden:true;
+    name
+    @Common.Label:'Name';
+    brief
+    @Common.Label:'Description';
+    valid_from
+    @Common.Label:'Valid From';
+    valid_to
+    @Common.Label:'Valid To';
+    status
+    @UI.Hidden:true;
+};
