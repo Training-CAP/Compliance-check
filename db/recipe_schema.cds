@@ -25,6 +25,7 @@ entity Ingredient : managed {
         name          : String;
         brief         : String;
 
+
 }
 
 

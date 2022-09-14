@@ -64,6 +64,12 @@ annotate service.Recipe with @(
             Label : 'General Information',
             Target : '@UI.FieldGroup#GeneratedGroup1',
         },
+         {
+            $Type : 'UI.ReferenceFacet',
+            ID : 'Ingredient',
+            Label : 'Ingredients',
+            Target : 'ingredientItems/@UI.LineItem',
+        }
     ]
 )
 {
@@ -85,3 +91,46 @@ annotate service.Recipe with @(
    status 
    @Common.Label:'Status';
 };
+annotate service.IngredientItem with @(
+     UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Value : ingredient.name
+        },
+         {
+            $Type : 'UI.DataField',
+            Value : ingredient.brief
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : minQty
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : maxQty
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : actualQty
+        }
+     ]
+){
+    ID
+    @UI.Hidden:true;
+    minQty
+    @Common.Label:'Min Quantity';
+    maxQty
+    @Common.Label:'Max Quantity';
+    actualQty
+    @Common.Label:'Actual Quantity';
+
+};
+annotate service.Ingredient{
+    ID
+    @UI.Hidden:true;
+    name
+    @Common.Label:'Name';
+    brief
+    @Common.Label:'Description';
+};
+
