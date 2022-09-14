@@ -32,4 +32,5 @@ service RecipeService {
             name,
             brief
         };
+        
 }

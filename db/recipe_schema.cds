@@ -24,8 +24,7 @@ entity Ingredient : managed {
         key ID            : UUID;
         name          : String;
         brief         : String;
-
-
+        
 }
 
 
